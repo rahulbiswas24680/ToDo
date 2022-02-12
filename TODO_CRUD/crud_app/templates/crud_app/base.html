@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <!-- fontawesme cdn css -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+
+    {% if title %}
+    <title>ToDo App - {{ title }}</title>
+    {% else %}
+    <title>ToDo App</title>
+    {% endif %}
+
+    <style>
+      body {
+        font-family: "Alata", sans-serif;
+        width: 100%;
+        height: 100%;
+      }
+
+      .badge {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        font-size: 9px;
+        border-radius: 3px;
+      }
+      .badge-success {
+        background-color: #6d00d3;
+      }
+      .badge-danger {
+        background-color: #d3006d;
+      }
+      .badge-primary {
+        background-color: #175e26;
+      }
+      .badge-info {
+        background-color: #006464;
+      }
+
+      .nav-tabs .nav-link.active {
+        font-weight: 600;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        color: #15ac2e;
+        border-bottom: 3px solid #15ac2e;
+        padding-left: 0;
+        padding-right: 0;
+        background-color: #f9f9f9;
+      }
+      .nav-item,
+      .nav-item:hover {
+        border: none;
+        color: #535353;
+        padding-left: 0;
+        padding-right: 0;
+        font-weight: 600;
+      }
+      .nav {
+        justify-content: space-around;
+        border: none;
+      }
+
+      ul #myTab {
+        justify-content: left !important;
+      }
+      .btn-success:active {
+        background-color: #54c266;
+        border-color: #48a758;
+      }
+      .taskClrChng {
+        background-color: #48a758;
+        box-shadow: 0 0 0 0 grey;
+      }
+      #tasklink {
+        text-decoration: none;
+      }
+      .taskname,
+      .taskdate {
+        color: rgb(51, 51, 51);
+      }
+      #tasklink:hover {
+        box-shadow: 0 10 20 0 grey !important;
+      }
+      textarea{
+        resize: vertical;
+      }
+
+    </style>
+  </head>
+  <body>
+    {% load task %}
+    <div class="container-fluid h-100">
+      <div class="row h-100 w-100" style="height: 100%;">
+        <div class="col-md-2 p-1" style="background-color: #f9f9f9;">
+          <h1
+            class="mt-5"
+            style="font-weight: 900; color: #15ac2e; margin-left: 3rem"
+          >
+            To-Do
+          </h1>
+          <nav class="mb-2">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a
+                class="nav-item nav-link active"
+                id="nav-home-tab"
+                data-toggle="tab"
+                href="#nav-home"
+                role="tab"
+                aria-controls="nav-home"
+                aria-selected="true"
+                >List</a
+              >
+              <a
+                class="nav-item nav-link"
+                id="nav-profile-tab"
+                data-toggle="tab"
+                href="#nav-profile"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="false"
+                >Tags</a
+              >
+              <a
+                class="nav-item nav-link"
+                id="nav-contact-tab"
+                data-toggle="tab"
+                href="#nav-contact"
+                role="tab"
+                aria-controls="nav-contact"
+                aria-selected="false"
+                >Custom</a
+              >
+            </div>
+          </nav>
+          <div class="tab-content mt-3" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <ul class="nav flex-column pl-1">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Work</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Personal</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Social</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 600; color: #39b139"
+                    >Create List +</a
+                  >
+                </li>
+              </ul>
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <a
+                  class="nav-link active"
+                  id="home-tab"
+                  data-toggle="tab"
+                  href="#home"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
+                  >Filters</a
+                >
+              </ul>
+              <ul class="nav flex-column pl-1">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Active Task</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Assigned to me</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Upcoming</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Overdue</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Completed</a
+                  >
+                </li>
+              </ul>
+              <a
+                href="{% url 'create-task' %}"
+                type="button"
+                class="btn btn-success btn-lg ml-4 my-4 text-right"
+                style="
+                  background-color: #69f07f;
+                  color: #3a3a3a;
+                  border-radius: 3px;
+                  border: 1px solid #69f07f;
+                  font-weight: 700;
+                  box-shadow: 0px 6px 20px 6px #bfbfbf;
+                "
+              >
+                Add Task +
+              </a>
+              
+            </div>
+            <div
+              class="tab-pane fade"
+              id="nav-profile"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+            >
+              <ul class="nav flex-column pl-1">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Work</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Link</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Link</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Disabled</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="nav-contact"
+              role="tabpanel"
+              aria-labelledby="nav-contact-tab"
+            >
+              <ul class="nav flex-column pl-1">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Active</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Link</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Link</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="#"
+                    style="font-weight: 400; color: black"
+                    >Disabled</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-5 p-1" style="background-color: #f0f0f0;">
+          {% if messege %}
+          <div id="message" class="alert alert-success">
+          </div>
+          {% endif %}
+          {% block middle %} {% endblock middle %}
+        </div>
+
+        <div class="col-md-5 p-1">
+          {% block task_detail %} {% endblock task_detail %}
+        </div>
+      </div>
+    </div>
+    {% block content %} {% endblock content %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <!-- fontawesome cdn -->
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+      integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+
+      
+    </script>
+  </body>
+</html>

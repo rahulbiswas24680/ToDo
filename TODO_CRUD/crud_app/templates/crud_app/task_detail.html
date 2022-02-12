@@ -1,0 +1,92 @@
+{% extends 'crud_app/middle.html' %}
+{% block task_detail %}
+{% load task %}
+
+
+    <div class="row mt-5 p-0" style="margin-left: 290px">
+      <span class="align-middle m-2 mt-2">
+        <i
+          class="fas fa-bell"
+          style="font-size: 25px; margin-top: 8px"
+        ></i>
+      </span>
+      <picture class="ml-2">
+        <img
+          src="http://www.classicaloasis.com/wp-content/uploads/2014/03/profile-square.jpg"
+          class="shadow-lg img-fluid img-thumbnail rounded-circle w-25 h-100"
+          alt="..."
+          style="box-shadow: 1px 8px 20px 2px #8ae4b3;"
+        />
+      </picture>
+    </div>
+    <div class="m-5">
+      <h3 class="text-bold" style="color: #535353; font-weight: 700">
+        {{ task|get_value:'name' }}
+      </h3>
+
+      <div style="display: inline-flex">
+        <p style="font-size: 12px; font-weight: 400; color: #3a3a3a">
+          {{ task|get_value:'created_at'|safe }}
+        </p>
+        {% if task|get_value:'completed' %}
+        <span
+          class="badge badge-primary float-right"
+          style="margin-left: 50px; height: 18px"
+          >Completed</span
+        >
+        {% else %}
+        <span
+          class="badge badge-primary float-right"
+          style="margin-left: 50px; height: 18px"
+          >Pending</span>
+        {% endif %}
+      </div>
+    </div>
+    <a href="{% url 'update-task' task_id=task|get_value:'gid' %}"><i
+      class="fas fa-pen-square float-right mr-5"
+      style="font-size: 30px; color: #15ac2e"
+    ></i></a>
+    <a type="button" href="{% url 'delete-task' task_id=task|get_value:'gid' %}" class="btn btn-danger float-right mr-1 p-1" style="font-size: 11px; background-color: rgb(206, 0, 0); margin-top: 3px;">
+      Delete
+    </a>
+    <div>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            href="#"
+            style="font-weight: 600; color: #666666; background-color: white;"
+            >Summary</a
+          >
+        </li>
+      </ul>
+
+      <p
+        class="h6 p-3"
+        style="font-size: 14px; font-weight: 200; color: #535353; margin-left: 30px;"
+      >
+        {{ task|get_value:'notes' }}
+      </p>
+    </div>
+    <form action="">
+      <div class="form-group row px-5">
+        <label
+          for="inputNotes3"
+          class="col-lg-3 col-form-label"
+          style="font-weight: 600; color: #666666"
+          >Notes</label
+        >
+        <div class="col-lg-9">
+          <input
+            type="text"
+            class="form-control"
+            id="inputNotes3"
+            placeholder="Add Notes...."
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock task_detail %}
+<i class="fa-solid fa-trash-can"></i>

@@ -1,0 +1,47 @@
+{% extends 'crud_app/base.html' %} 
+{% block middle %}
+{% load task %}
+
+<div class="container">
+  <div class="mt-5">
+    <input
+      class="form-control mr-sm-2"
+      type="search"
+      placeholder="Search"
+      aria-label="Search"
+    />
+    <i class="fa-regular fa-magnifying-glass" style="color: black"></i>
+  </div>
+  <h1 class="mt-4" style="color: #15ac2e; font-weight: 900; font-size: 50px">
+    Work
+  </h1>
+  <p style="color: #3a3a3a; font-size: 15px; padding: 10px">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis inventore
+    magni facere nobis distinctio, asperiores nisi nostrum reprehenderit, maxime
+    temporibus cumque ipsum error minus eaque. Sapiente libero et quo maxime?
+  </p>
+  {% for task in list %}
+  <a href="{% url 'task-detail' task_id=task|get_value:'gid'%}" id="tasklink">
+    <div id="{{ task|get_value:'gid' }}" class="card m-2">
+      <div class="card-body p-0">
+        <h6 class="mt-2 mb-0 mx-3 taskname"><b>{{ task|get_value:'name' }}</b></h6>
+        {% if task|get_value:'completed' == True %}
+          <span class="badge badge-primary float-right mx-3">Completed</span>
+        {% else %}
+          <span class="badge badge-primary float-right mx-3">Pending</span>
+        {% endif %}
+        <p><small class="mx-3 taskdate">{{ task|get_value:'created_at'|safe }}</small></p>
+      </div>
+    </div>
+  </a>
+  
+{% endfor %}
+</div>
+
+{% endblock middle %}
+
+
+
+
+{% block task_detail %}
+{% endblock task_detail %}
